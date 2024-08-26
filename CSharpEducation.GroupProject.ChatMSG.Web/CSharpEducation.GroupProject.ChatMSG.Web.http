@@ -1,0 +1,6 @@
+@CSharpEducation.GroupProject.ChatMSG.Web_HostAddress = http://localhost:5001
+
+GET {{CSharpEducation.GroupProject.ChatMSG.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
