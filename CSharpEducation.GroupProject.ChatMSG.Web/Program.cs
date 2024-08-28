@@ -1,4 +1,10 @@
 
+using CSharpEducation.GroupProject.ChatMSG.Application.Abstractions;
+using CSharpEducation.GroupProject.ChatMSG.Core.Abstractions;
+using CSharpEducation.GroupProject.ChatMSG.Core.Entities;
+using CSharpEducation.GroupProject.ChatMSG.Core.Services;
+using CSharpEducation.GroupProject.ChatMSG.DataBase;
+
 namespace CSharpEducation.GroupProject.ChatMSG.Web
 {
   public class Program
@@ -8,7 +14,11 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web
       var builder = WebApplication.CreateBuilder(args);
 
       // Add services to the container.
-
+      
+      builder.Services.AddScoped<IRepository<ChatEntity>, MockChatRepository>();
+      builder.Services.AddScoped<IRepository<MessageEntity>, MockMessageRepository>();
+      builder.Services.AddScoped<IChatService, ChatService>();
+      builder.Services.AddScoped<IMessageService, MessageService>();
       builder.Services.AddControllers();
       builder.Services.AddEndpointsApiExplorer();
       builder.Services.AddSwaggerGen();
