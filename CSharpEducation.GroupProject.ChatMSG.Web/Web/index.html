@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Document</title>
+</head>
+
+<body>
+
+<div class="auth">
+  <div class="auth-container">
+    
+    <div class="auth-form" id="login-form">
+      <h2>Вход</h2>
+      <input type="text" id="login-username" placeholder="Никнейм">
+      <input type="password" id="login-password" placeholder="Пароль">
+      <br>
+      <button onclick="login()">Войти</button>
+      <p>Нет аккаунта? <a href="#" onclick="showRegisterForm()">Регистрация</a></p>
+      <p>Или <a href="#" onclick="showGuestForm()">Войти как гость</a></p>
+    </div>
+
+    <div class="auth-form" id="register-form" style="display: none;">
+      <h2>Регистрация</h2>
+      <input type="text" id="register-username" placeholder="Никнейм">
+      <input type="password" id="register-password" placeholder="Пароль">
+      <button onclick="register()">Зарегистрироваться</button>
+      <p>Уже есть аккаунт? <a href="#" onclick="showLoginForm()">Вход</a></p>
+    </div>
+
+    <div class="auth-form" id="guest-form" style="display: none;">
+      <h2>Вход как гость</h2>
+      <input type="text" id="guest-username" placeholder="Никнейм">
+      <button onclick="loginAsGuest()">Войти</button>
+      <p>Уже есть аккаунт? <a href="#" onclick="showLoginForm()">Вход</a></p>
+    </div>
+
+  </div>
+</div>
+
+<div class="messenger" style="display: none;">
+  
+  <div class="chat-list">
+    <div class="chat-item" onclick="openChat('chat1')">Диалог 1</div>
+    <div class="chat-item" onclick="openChat('chat2')">Диалог 2</div>
+  </div>
+
+  <div class="chat-window">
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input">
+      <input type="text" id="message-input" placeholder="Введите сообщение">
+      <button onclick="sendMessage()">Отправить</button>
+    </div>
+  </div>
+
+</div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
