@@ -50,6 +50,8 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web
         app.UseSwaggerUI();
       }
 
+      app.UseStaticFiles();
+
       app.UseAuthentication();
       app.UseAuthorization();
 
@@ -57,7 +59,7 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web
 
       app.MapControllers();
 
-      app.MapIdentityApi<UserEntity>();
+      //app.MapIdentityApi<UserEntity>();
 
       app.Run();
     }
