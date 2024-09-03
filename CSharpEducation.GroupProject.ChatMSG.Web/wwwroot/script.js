@@ -33,6 +33,30 @@ function openChat(chatId) {
   document.getElementById('chat-messages').innerHTML = `Сообщения из ${chatId}`;
 }
 
+function register() {
+    const registerUsername = document.getElementById('register-username');
+    const registerPassword = document.getElementById('register-password');
+
+    const data = {
+        "userName": registerUsername.value,
+        "password": registerPassword.value,
+    }
+    const response = fetch('/User', {
+        method: "POST", 
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data), 
+    }).then(r => {
+        if (r.ok) {
+            alert('Вы зарегестрированы');
+            showLoginForm();
+        }
+        else alert('Произошла ошибка');
+    });  
+}
+
+
 function sendMessage() {
   const messageInput = document.getElementById('message-input');
   const message = messageInput.value;

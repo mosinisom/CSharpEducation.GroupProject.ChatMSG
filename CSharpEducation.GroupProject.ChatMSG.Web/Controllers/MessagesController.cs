@@ -18,7 +18,7 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
     {
       var messages = await messageService.GetAllFromChat(chat.Id);
 
-      var response = messages.Select(msg => new MessageResponse(msg.Id, msg.Content, msg.DateTime, msg.ChatId, msg.UserId));
+      var response = messages.Select(msg => new MessageResponse(msg.Id, msg.Content, msg.DateTime, msg.ChatId, msg.UserId, string.Empty));
 
       return Ok(response);
     }

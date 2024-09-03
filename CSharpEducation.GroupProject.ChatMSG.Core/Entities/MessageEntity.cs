@@ -8,8 +8,8 @@ namespace CSharpEducation.GroupProject.ChatMSG.Core.Entities
     public string Content { get; set; }
     public DateTime DateTime { get; set; }
     public int ChatId { get; set; }
-    public int UserId { get; set; }
-    public User User { get; set; }
+    public string UserId { get; set; }
+    public Models.User User { get; set; }
     public Chat Chat { get; set; }
   }
 }
