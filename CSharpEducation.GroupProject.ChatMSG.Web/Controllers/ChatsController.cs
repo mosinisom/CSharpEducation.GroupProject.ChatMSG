@@ -11,7 +11,6 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
   public class ChatsController : Controller
   {
     private IChatService chatService;
-    private IMessageService messageService;
 
     [HttpGet]
     public async Task<ActionResult<List<ChatResponse>>> GetAll()
@@ -28,11 +27,10 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
       await chatService.CreateChat(newChat);
       return Ok(newChat);
     }
-
+    //добавить контр возвращения чата со всеми сообщениями
     public ChatsController(IChatService service, IMessageService messageService)
     {
       chatService = service;
-      this.messageService = messageService;
     }
   }
 }
