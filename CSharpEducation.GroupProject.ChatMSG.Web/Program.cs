@@ -5,7 +5,7 @@ using CSharpEducation.GroupProject.ChatMSG.Core.Entities;
 using CSharpEducation.GroupProject.ChatMSG.Core.Services;
 using CSharpEducation.GroupProject.ChatMSG.DataBase;
 using CSharpEducation.GroupProject.ChatMSG.Web.DataBase;
-using Npgsql;
+
 
 
 namespace CSharpEducation.GroupProject.ChatMSG.Web
@@ -39,9 +39,6 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web
 			app.UseHttpsRedirection();
 
 			app.MapControllers();
-
-			
-
 
 			app.Run();
 

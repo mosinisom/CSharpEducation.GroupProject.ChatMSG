@@ -1,7 +1,5 @@
 ﻿using CSharpEducation.GroupProject.ChatMSG.Core.Abstractions;
-using CSharpEducation.GroupProject.ChatMSG.Core.Entities;
 using CSharpEducation.GroupProject.ChatMSG.Core.Models;
-using CSharpEducation.GroupProject.ChatMSG.Core.Services;
 using CSharpEducation.GroupProject.ChatMSG.Web.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
@@ -14,7 +12,7 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
   {
     private IChatService chatService;
     private IMessageService messageService;
-    //private IInvitationService invitation;
+    
 
     [HttpGet]
     public async Task<ActionResult<List<ChatResponse>>> GetAll()
@@ -30,7 +28,6 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
       
 			Chat newChat = new Chat() {Id =chatRequest.Id, Name  = chatRequest.Name};
 
-      //await chatService.CreateChat(newChat);
 
 			string connectionString =
 		 "Host=localhost;Port=1234;Username=postgres;Password=123;Database=messengerdb";
@@ -45,7 +42,7 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
         // Данные для добавления нового чата
         int id = chatRequest.Id; 
         string chatname = chatRequest.Name;
-        string link ="40";
+        string link = chatService.GenerateInvitationLink();
 
 
 
@@ -74,7 +71,6 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
     {
       chatService = service;
       this.messageService = messageService;
-    
     }
   }
 }

@@ -1,10 +1,6 @@
-﻿using CSharpEducation.GroupProject.ChatMSG.Core.Services;
-using Microsoft.AspNetCore.Mvc;
-using CSharpEducation.GroupProject.ChatMSG.Core.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using CSharpEducation.GroupProject.ChatMSG.Core.Abstractions;
-using CSharpEducation.GroupProject.ChatMSG.DataBase;
 using CSharpEducation.GroupProject.ChatMSG.Web.Contracts;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Npgsql;
 
 
@@ -14,11 +10,11 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
 	[Route("[controller]")]
 	public class InvitationController : Controller
 	{
-		//private IInvitationService invitationService;
-		//private Chat chat;
+		
+		private IChatService chatService;
 
-		//[HttpGet("generated-link")]
-		[HttpGet("{name}")]
+		
+		[HttpGet("generated-link/{name}")]
 		public async Task<IActionResult> GenerateInvitationLink(string name)
 		{
 			string connectionString =
@@ -53,34 +49,41 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
 				return Ok(new { Link = link });
 		}
 
-		[HttpGet("process-link/{link}")]
-		public async Task<IActionResult> ProcessInvitationLink(string link)
+		[HttpPut("update-link-by-chatname")]
+		public async Task<IActionResult> UpdateLink([FromBody] ChatRequest chatRequest)
 		{
-			//var invitation = await invitationService.GetInvitationByLink();
-			/*if (invitation == null)
+			string connectionString =
+			 "Host=localhost;Port=1234;Username=postgres;Password=123;Database=messengerdb";
+
+			string newLink = chatService.GenerateInvitationLink() ;
+
+			string sql = "UPDATE chat SET link = @newLink WHERE chatname = @chatname";
+
+
+			using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
 			{
-				return NotFound("Invitation not found or already used");
-			}*/
+				connection.Open();
 
-			// Логика добавления пользователя в чат
-			AddUserToChat();
+				using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
+				{
+					command.Parameters.AddWithValue("@newlink", newLink);
+					command.Parameters.AddWithValue("@chatname", chatRequest.Name);
 
-			// Отметить приглашение как использованное
-			//invitation.IsLinkUsed = true;
-			//await invitationService.SaveInvitationLink(chat);
+					command.ExecuteReader();
 
-			return Ok("Invitation processed successfully");
+					Console.WriteLine($"Новая ссылка на чат {newLink}");
+					
+				}
+
+				connection.Close();
+			}
+
+			return Ok(new {NewLink = newLink });
 		}
 
-
-		private void AddUserToChat()
+		public InvitationController(IChatService chatService)
 		{
-			
-		}
-
-		public InvitationController()
-		{
-			//this.invitationService = invitationService;
+			this.chatService = chatService;
 		}
 	}
 }
