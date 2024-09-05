@@ -42,8 +42,9 @@
 </div>
 
 <div class="messenger" style="display: none;">
-  
   <div class="chat-list">
+    <input type="text" id="chat-name-input" placeholder="Название чата">
+    <button onclick="createChat()">Создать чат</button>
     <div class="chat-item" onclick="openChat('chat1')">Диалог 1</div>
     <div class="chat-item" onclick="openChat('chat2')">Диалог 2</div>
   </div>
@@ -55,7 +56,6 @@
       <button onclick="sendMessage()">Отправить</button>
     </div>
   </div>
-
 </div>
 
   <script src="script.js"></script>
