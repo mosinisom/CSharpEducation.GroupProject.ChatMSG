@@ -10,5 +10,9 @@ namespace CSharpEducation.GroupProject.ChatMSG.Core.Entities
 
     [ForeignKey("ChatId")]
     public ICollection<Message> Message { get; }
-  }
+
+		public string? Link { get; set; }
+		public DateTime CreatedAt { get; set; }
+		public bool IsLinkUsed { get; set; }
+	}
 }

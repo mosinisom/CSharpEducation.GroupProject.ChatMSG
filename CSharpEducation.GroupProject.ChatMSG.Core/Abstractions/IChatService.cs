@@ -7,5 +7,6 @@ namespace CSharpEducation.GroupProject.ChatMSG.Core.Abstractions
     Task<IEnumerable<Chat>> GetAll();
     Task<Chat> GetChat(int id);
     Task CreateChat(Chat chat);
-  }
+    public string GenerateInvitationLink();
+	}
 }

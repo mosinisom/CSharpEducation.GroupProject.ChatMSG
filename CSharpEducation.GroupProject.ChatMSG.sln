@@ -5,9 +5,9 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpEducation.GroupProject.ChatMSG.DataBase", "CSharpEducation.GroupProject.ChatMSG.DataBase\CSharpEducation.GroupProject.ChatMSG.DataBase.csproj", "{2C741C35-4892-4126-9A79-E03ED3A0E847}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEducation.GroupProject.ChatMSG.Core", "CSharpEducation.GroupProject.ChatMSG.Core\CSharpEducation.GroupProject.ChatMSG.Core.csproj", "{7E9E81F3-8770-484B-B748-234F300B25EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpEducation.GroupProject.ChatMSG.Core", "CSharpEducation.GroupProject.ChatMSG.Core\CSharpEducation.GroupProject.ChatMSG.Core.csproj", "{7E9E81F3-8770-484B-B748-234F300B25EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEducation.GroupProject.ChatMSG.Web", "CSharpEducation.GroupProject.ChatMSG.Web\CSharpEducation.GroupProject.ChatMSG.Web.csproj", "{860C1E87-7D20-4D9D-BFFB-0CB5B563F390}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpEducation.GroupProject.ChatMSG.Web", "CSharpEducation.GroupProject.ChatMSG.Web\CSharpEducation.GroupProject.ChatMSG.Web.csproj", "{860C1E87-7D20-4D9D-BFFB-0CB5B563F390}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

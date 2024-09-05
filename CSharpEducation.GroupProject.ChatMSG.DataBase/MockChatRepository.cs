@@ -30,8 +30,13 @@ namespace CSharpEducation.GroupProject.ChatMSG.DataBase
 
     public async Task Add(ChatEntity entity)
     {
-      _chatEntities.Capacity = entity.Id;
+      //_chatEntities.Capacity = entity.Id;
       _chatEntities.Add(entity);
+    }
+
+    public async Task AddLink(ChatEntity entity)
+    {
+
     }
 
     public async Task Update(ChatEntity entity)

@@ -6,6 +6,8 @@
     Task<IQueryable<T>> GetAll(bool includeDeleted = false);
     Task Add(T entity);
     Task Update(T entity);
-    Task Remove(T entity);
+
+
+		Task Remove(T entity);
   }
 }
