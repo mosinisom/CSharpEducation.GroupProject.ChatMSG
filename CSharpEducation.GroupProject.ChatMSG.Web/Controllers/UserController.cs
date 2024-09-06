@@ -21,11 +21,12 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
     SignInManager<UserEntity> signInManager;
 
     [HttpPost]
-    public async Task<Results<Ok, ValidationProblem>> Registration([FromBody] RegisterReq registration)
+    public async Task<Results<Ok, ValidationProblem>> Registration([FromBody] UserRegisterRequest registration)
     {
       var userName = registration.UserName;
 
       var user = new UserEntity();
+
       await userStore.SetUserNameAsync(user, userName, CancellationToken.None);
       var result = await userManager.CreateAsync(user, registration.Password);
 
@@ -38,25 +39,13 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
     }
 
     [HttpPost("login")]
-    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] LoginRequest login, [FromQuery] bool? useCookies, [FromQuery] bool? useSessionCookies)
+    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] UserLoginRequest login, [FromQuery] bool? useCookies, [FromQuery] bool? useSessionCookies)
     {
       var useCookieScheme = (useCookies == true) || (useSessionCookies == true);
       var isPersistent = (useCookies == true) && (useSessionCookies != true);
       signInManager.AuthenticationScheme = useCookieScheme ? IdentityConstants.ApplicationScheme : IdentityConstants.BearerScheme;
 
-      var result = await signInManager.PasswordSignInAsync(login.Email, login.Password, isPersistent, lockoutOnFailure: true);
-
-      if (result.RequiresTwoFactor)
-      {
-        if (!string.IsNullOrEmpty(login.TwoFactorCode))
-        {
-          result = await signInManager.TwoFactorAuthenticatorSignInAsync(login.TwoFactorCode, isPersistent, rememberClient: isPersistent);
-        }
-        else if (!string.IsNullOrEmpty(login.TwoFactorRecoveryCode))
-        {
-          result = await signInManager.TwoFactorRecoveryCodeSignInAsync(login.TwoFactorRecoveryCode);
-        }
-      }
+      var result = await signInManager.PasswordSignInAsync(login.UserName, login.Password, isPersistent, lockoutOnFailure: true);
 
       if (!result.Succeeded)
       {

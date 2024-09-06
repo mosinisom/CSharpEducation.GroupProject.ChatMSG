@@ -7,8 +7,6 @@ namespace CSharpEducation.GroupProject.ChatMSG.Core.Entities
   public class ChatEntity : BaseEntity
   {
     public string Name { get; set; }
-
-    [ForeignKey("ChatId")]
-    public ICollection<Message> Message { get; }
+    public ICollection<MessageEntity> Messages { get; set; } 
   }
 }

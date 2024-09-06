@@ -18,8 +18,8 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web
 
       // Add services to the container.
 
-      builder.Services.AddScoped<IRepository<ChatEntity>, MockChatRepository>();
-      builder.Services.AddScoped<IRepository<MessageEntity>, MockMessageRepository>();
+      builder.Services.AddScoped<IRepository<ChatEntity>, ChatRepository<ChatEntity>>();
+      builder.Services.AddScoped<IRepository<MessageEntity>, MessageRepository<MessageEntity>>();
       builder.Services.AddScoped<IChatService, ChatService>();
       builder.Services.AddScoped<IMessageService, MessageService>();
       builder.Services.AddControllers();
@@ -58,8 +58,6 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web
       app.UseHttpsRedirection();
 
       app.MapControllers();
-
-      //app.MapIdentityApi<UserEntity>();
 
       app.Run();
     }

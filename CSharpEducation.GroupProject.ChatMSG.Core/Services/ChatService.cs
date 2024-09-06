@@ -11,7 +11,7 @@ namespace CSharpEducation.GroupProject.ChatMSG.Core.Services
     public async Task<IEnumerable<Chat>> GetAll()
     {
       List<Chat> chats = new List<Chat>();
-      var entities = await chatRepository.GetAll();
+      var entities = chatRepository.GetAll();
       chats = entities.Select(chat => new Chat { Id = chat.Id, Name = chat.Name }).ToList();
 
       return chats;

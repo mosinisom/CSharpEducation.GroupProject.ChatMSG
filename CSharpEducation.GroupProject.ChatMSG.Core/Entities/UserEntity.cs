@@ -6,9 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CSharpEducation.GroupProject.ChatMSG.Core.Entities
 {
   public class UserEntity : IdentityUser
-  {
-    
-    [ForeignKey("UserId")]
-    public ICollection<Message> Message { get; }
+  { 
+    public ICollection<MessageEntity> Messages { get; }
   }
 }

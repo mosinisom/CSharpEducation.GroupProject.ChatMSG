@@ -16,15 +16,15 @@ namespace CSharpEducation.GroupProject.ChatMSG.Core.Services
         ChatId = message.ChatId,
         Content = message.Content,
         UserId = message.UserId,
-        DateTime = DateTime.Now,
+        DateTime = DateTime.Now.ToUniversalTime(),
       };
 
       await repository.Add(newMessage);
     }
 
-    public async Task<List<Message>> GetAllFromChat(int chatId)
+    public List<Message> GetAllFromChat(int chatId)
     {
-      var allMessage = await repository.GetAll();
+      var allMessage = repository.GetAll();
       List<Message> messages = allMessage.Select(message => new Message()
       {
         ChatId = message.ChatId,

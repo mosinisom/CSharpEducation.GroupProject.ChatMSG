@@ -2,6 +2,7 @@
 using CSharpEducation.GroupProject.ChatMSG.Core.Entities;
 using CSharpEducation.GroupProject.ChatMSG.Core.Models;
 using CSharpEducation.GroupProject.ChatMSG.Web.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
@@ -12,6 +13,7 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
   {
     private IChatService chatService;
 
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<List<ChatResponse>>> GetAll()
     {
@@ -20,6 +22,7 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
       return Ok(response);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<ChatResponse>> Create([FromBody] ChatRequest chatRequest)
     {
@@ -27,7 +30,15 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
       await chatService.CreateChat(newChat);
       return Ok(newChat);
     }
-    //добавить контр возвращения чата со всеми сообщениями
+
+    [Authorize]
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ChatResponse>> Get([FromRoute] int id)
+    {
+      Chat newChat = await chatService.GetChat(id);
+      return Ok(newChat);
+    }
+
     public ChatsController(IChatService service, IMessageService messageService)
     {
       chatService = service;
