@@ -13,6 +13,7 @@ namespace CSharpEducation.GroupProject.ChatMSG.Core.Models
     public DateTime DateTime { get; set; }
     public int ChatId { get; set; }
     public string UserId { get; set; }
+    public string UserName { get; set; }
     public Chat Chat { get; set; }
   }
 }

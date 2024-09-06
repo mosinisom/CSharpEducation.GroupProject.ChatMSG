@@ -56,6 +56,40 @@
   overflow-y: auto;
 }
 
+/* Стили для вкладок чатов */
+.chat-tab {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    display: block; /* Гарантирует, что элемент будет как блок */
+    width: 100%; /* Расширение до 100% ширины родительского элемента */
+    box-sizing: border-box; /* Учитывает padding и border в общей ширине элемента */
+}
+
+    .chat-tab:hover {
+        background-color: #e0e0e0; /* Цвет при наведении */
+    }
+
+    .chat-tab.active {
+        background-color: #d0d0d0; /* Цвет активной вкладки */
+    }
+
+/* Стили для контейнера с чатами */
+#chatList {
+    display: flex;
+    flex-direction: column; /* Ставим чаты вертикально */
+    width: 200px; /* Ширина списка чатов */
+    padding: 10px; /* Отступы внутри контейнера */
+    border-right: 1px solid #ccc; /* Разделительная линия справа */
+}
+
+.chat-messages li {
+    list-style-type: none;
+}
+
 .chat-item {
   padding: 15px;
   border-bottom: 1px solid #ccc;

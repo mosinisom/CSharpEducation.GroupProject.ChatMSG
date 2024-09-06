@@ -18,6 +18,7 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
     public async Task<ActionResult<List<MessageResponse>>> GetAllFromChat([FromRoute] int id)
     {
       var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+      var userName = User.FindFirstValue(ClaimTypes.Name);
 
       if (userId == null)
       {
@@ -26,7 +27,13 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
 
       var messages = messageService.GetAllFromChat(id);
 
-      var response = messages.Select(msg => new MessageResponse(msg.Id, msg.Content, msg.DateTime, msg.ChatId, msg.UserId, string.Empty));
+      var response = messages.Select(msg => new MessageResponse(
+        msg.Id,
+        msg.Content,
+        msg.DateTime.ToString("dd.MM.yy H:mm:ss"),
+        msg.ChatId,
+        msg.UserId,
+        msg.UserName));
 
       return Ok(response);
     }
@@ -35,11 +42,11 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
     [HttpPost]
     public async Task<ActionResult<MessageResponse>> SendMessage([FromBody] MessageRequest msgRequest)
     {
-      var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 
+      var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
       if (userId == null)
       {
-        return Unauthorized(); 
+        return Unauthorized();
       }
 
       Message newMessage = new Message()
@@ -49,8 +56,18 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
         Content = msgRequest.Content,
       };
 
-      await messageService.Add(newMessage);
-      return Ok(newMessage);
+      var createdMessage = await messageService.Add(newMessage);
+
+      MessageResponse messageResponse = new MessageResponse(
+        Id: createdMessage.Id,
+        Content: createdMessage.Content,
+        DateTime: createdMessage.DateTime.ToString("dd.MM.yy H:mm:ss"),
+        ChatId: createdMessage.ChatId,
+        UserId: createdMessage.UserId,
+        UserName: createdMessage.UserName
+      );
+
+      return Ok(messageResponse);
     }
 
     public MessagesController(IChatService service, IMessageService messageService)

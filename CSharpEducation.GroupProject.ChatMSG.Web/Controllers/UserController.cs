@@ -1,6 +1,5 @@
 ﻿using CSharpEducation.GroupProject.ChatMSG.Core.Entities;
 using CSharpEducation.GroupProject.ChatMSG.Web.Contracts;
-using CSharpEducation.GroupProject.ChatMSG.Web.Properties;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
@@ -10,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
 {
-  //лобавить разлогинивание 
+    //лобавить разлогинивание 
 
-  [ApiController]
+    [ApiController]
   [Route("[controller]")]
   public class UserController : Controller
   {
@@ -24,7 +23,6 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
     public async Task<Results<Ok, ValidationProblem>> Registration([FromBody] UserRegisterRequest registration)
     {
       var userName = registration.UserName;
-
       var user = new UserEntity();
 
       await userStore.SetUserNameAsync(user, userName, CancellationToken.None);
@@ -39,10 +37,11 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
     }
 
     [HttpPost("login")]
-    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] UserLoginRequest login, [FromQuery] bool? useCookies, [FromQuery] bool? useSessionCookies)
+    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] UserLoginRequest login)
     {
-      var useCookieScheme = (useCookies == true) || (useSessionCookies == true);
-      var isPersistent = (useCookies == true) && (useSessionCookies != true);
+      var useCookieScheme = true;
+      var isPersistent = true;
+
       signInManager.AuthenticationScheme = useCookieScheme ? IdentityConstants.ApplicationScheme : IdentityConstants.BearerScheme;
 
       var result = await signInManager.PasswordSignInAsync(login.UserName, login.Password, isPersistent, lockoutOnFailure: true);
