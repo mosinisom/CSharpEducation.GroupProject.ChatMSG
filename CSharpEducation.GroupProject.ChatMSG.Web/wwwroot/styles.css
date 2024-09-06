@@ -56,7 +56,7 @@
   overflow-y: auto;
 }
 
-/* Стили для вкладок чатов */
+
 .chat-tab {
     padding: 10px;
     margin: 5px 0;
@@ -64,26 +64,26 @@
     border-radius: 5px;
     cursor: pointer;
     background-color: #f9f9f9;
-    display: block; /* Гарантирует, что элемент будет как блок */
-    width: 100%; /* Расширение до 100% ширины родительского элемента */
-    box-sizing: border-box; /* Учитывает padding и border в общей ширине элемента */
+    display: block; 
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
     .chat-tab:hover {
-        background-color: #e0e0e0; /* Цвет при наведении */
+        background-color: #e0e0e0; 
     }
 
     .chat-tab.active {
-        background-color: #d0d0d0; /* Цвет активной вкладки */
+        background-color: #d0d0d0; 
     }
 
-/* Стили для контейнера с чатами */
+
 #chatList {
     display: flex;
-    flex-direction: column; /* Ставим чаты вертикально */
-    width: 200px; /* Ширина списка чатов */
-    padding: 10px; /* Отступы внутри контейнера */
-    border-right: 1px solid #ccc; /* Разделительная линия справа */
+    flex-direction: column; 
+    width: 200px; 
+    padding: 10px; 
+    border-right: 1px solid #ccc; 
 }
 
 .chat-messages li {

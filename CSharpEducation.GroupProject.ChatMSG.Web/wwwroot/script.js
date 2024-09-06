@@ -71,38 +71,36 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatNameInput = document.getElementById("chat-name-input");
     let currentChatId = null;
 
-    // Функция для загрузки всех чатов
-function loadChats() {
-    fetch('/Chats') // Получаем список чатов через контроллер Chats
-        .then(response => response.json())
-        .then(data => {
-            const chatList = document.getElementById("chatList");
-            chatList.innerHTML = ''; // Очищаем список чатов перед отображением новых
-            data.forEach(chat => {
-                const chatTab = document.createElement("div");
-                chatTab.textContent = chat.name;
-                chatTab.classList.add('chat-tab'); // Применяем класс для вкладки
-                
-                // Добавляем событие клика на каждую вкладку
-                chatTab.addEventListener("click", () => {
-                    console.log(`Chat clicked: ${chat.id}`);
-                    currentChatId = chat.id;
-                    loadMessages(currentChatId);
+
+    function loadChats() {
+        fetch('/Chats')
+            .then(response => response.json())
+            .then(data => {
+                const chatList = document.getElementById("chatList");
+                chatList.innerHTML = '';
+                data.forEach(chat => {
+                    const chatTab = document.createElement("div");
+                    chatTab.textContent = chat.name;
+                    chatTab.classList.add('chat-tab');
+
+                    chatTab.addEventListener("click", () => {
+                        console.log(`Chat clicked: ${chat.id}`);
+                        currentChatId = chat.id;
+                        loadMessages(currentChatId);
+                    });
+                    chatList.appendChild(chatTab);
                 });
-                chatList.appendChild(chatTab); // Добавляем вкладку в список
-            });
-        })
-        .catch(error => console.error('Ошибка при загрузке чатов:', error));
+            })
+            .catch(error => console.error('Ошибка при загрузке чатов:', error));
     }
 
-    // Функция для создания нового чата
     function createChat() {
         const chatName = chatNameInput.value;
         if (!chatName) {
-            return; // Если название чата пустое
+            return;
         }
 
-        fetch('/Chats', { // Отправляем данные нового чата
+        fetch('/Chats', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -111,7 +109,7 @@ function loadChats() {
         })
             .then(response => response.json())
             .then(data => {
-                // После успешного создания чата обновляем список чатов
+
                 const chatTab = document.createElement("div");
                 chatTab.textContent = data.name;
                 chatTab.addEventListener("click", () => {
@@ -120,39 +118,37 @@ function loadChats() {
                 });
                 chatTab.classList.add('chat-tab');
                 chatList.appendChild(chatTab);
-                chatNameInput.value = ''; // Очищаем поле ввода
+                chatNameInput.value = '';
             })
             .catch(error => console.error('Ошибка при создании чата:', error));
     }
 
-    // Функция для загрузки сообщений по ID чата
     function loadMessages(chatId) {
         if (!chatId) { return; }
-        fetch(`/Messages/${currentChatId}`) // Изменено на правильный маршрут
+        fetch(`/Messages/${currentChatId}`)
             .then(response => response.json())
             .then(data => {
-                messageList.innerHTML = ''; // Очищаем список сообщений перед отображением новых
+                messageList.innerHTML = '';
                 data.forEach(message => {
                     const messageItem = document.createElement("li");
-                    messageItem.textContent = `${message.userName} ${message.dateTime}: ${message.content}`; // Обновлено для корректного отображения
+                    messageItem.textContent = `${message.userName} ${message.dateTime}: ${message.content}`;
                     messageList.appendChild(messageItem);
                 });
             })
             .catch(error => console.error('Ошибка при загрузке сообщений:', error));
     }
 
-    // Функция для отправки сообщения
     sendButton.addEventListener("click", () => {
         if (!currentChatId || !messageInput.value) {
-            return; // Если чат не выбран или сообщение пустое
+            return;
         }
 
         const messageData = {
             chatId: currentChatId,
-            content: messageInput.value, // Используем content вместо text
+            content: messageInput.value,
         };
 
-        fetch('/Messages', { // Отправляем сообщение через контроллер Messages
+        fetch('/Messages', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -161,16 +157,14 @@ function loadChats() {
         })
             .then(response => response.json())
             .then(data => {
-                // После успешной отправки сообщения обновляем список сообщений
+
                 const messageItem = document.createElement("li");
-                messageItem.textContent = `${data.userName} ${data.dateTime}: ${data.content}`; // Обновлено для корректного отображения
+                messageItem.textContent = `${data.userName} ${data.dateTime}: ${data.content}`;
                 messageList.appendChild(messageItem);
-                messageInput.value = ''; // Очищаем поле ввода
+                messageInput.value = '';
             })
             .catch(error => console.error('Ошибка при отправке сообщения:', error));
     });
-
-   
 
     loadChats();
     setInterval(() => loadMessages(currentChatId), 2500);
