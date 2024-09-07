@@ -5,11 +5,28 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace CSharpEducation.GroupProject.ChatMSG.DataBase.Configuration
 {
+  /// <summary>
+  /// Контекст базы данных для приложения, включающий чаты и сообщения.
+  /// Наследуется от <see cref="IdentityDbContext{UserEntity}"/> для управления пользователями и их сообщениями.
+  /// </summary>
   public class ApplicationDbContext : IdentityDbContext<UserEntity>
   {
+    /// <summary>
+    /// Таблица чатов в базе данных.
+    /// </summary>
     public DbSet<ChatEntity> Chats { get; set; }
+
+    /// <summary>
+    /// Таблица сообщения в базе данных
+    /// </summary>
     public DbSet<MessageEntity> Messages { get; set; }
 
+    //Таблица пользователей создается библиотекой Identity.
+
+    /// <summary>
+    /// Настраивает сущности при создании модели базы данных с помощью Fluent API
+    /// </summary>
+    /// <param name="builder">Построитель модели для настройки сущностей.</param>
     protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);
@@ -22,6 +39,7 @@ namespace CSharpEducation.GroupProject.ChatMSG.DataBase.Configuration
               .WithOne(c => c.Chat)
               .HasForeignKey(c => c.ChatId);
       });
+
       //TODO в отдельном классе
       builder.Entity<MessageEntity>(entity =>
       {
