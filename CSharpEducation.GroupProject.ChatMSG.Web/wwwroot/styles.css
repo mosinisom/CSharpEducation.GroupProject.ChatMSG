@@ -56,6 +56,40 @@
   overflow-y: auto;
 }
 
+
+.chat-tab {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    display: block; 
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+    .chat-tab:hover {
+        background-color: #e0e0e0; 
+    }
+
+    .chat-tab.active {
+        background-color: #d0d0d0; 
+    }
+
+
+#chatList {
+    display: flex;
+    flex-direction: column; 
+    width: 200px; 
+    padding: 10px; 
+    border-right: 1px solid #ccc; 
+}
+
+.chat-messages li {
+    list-style-type: none;
+}
+
 .chat-item {
   padding: 15px;
   border-bottom: 1px solid #ccc;

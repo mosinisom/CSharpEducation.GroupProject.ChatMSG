@@ -1,6 +1,5 @@
 ﻿using CSharpEducation.GroupProject.ChatMSG.Core.Entities;
 using CSharpEducation.GroupProject.ChatMSG.Web.Contracts;
-using CSharpEducation.GroupProject.ChatMSG.Web.Properties;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
@@ -10,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
 {
-  //лобавить разлогинивание 
+    //лобавить разлогинивание 
 
-  [ApiController]
+    [ApiController]
   [Route("[controller]")]
   public class UserController : Controller
   {
@@ -21,11 +20,11 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
     SignInManager<UserEntity> signInManager;
 
     [HttpPost]
-    public async Task<Results<Ok, ValidationProblem>> Registration([FromBody] RegisterReq registration)
+    public async Task<Results<Ok, ValidationProblem>> Registration([FromBody] UserRegisterRequest registration)
     {
       var userName = registration.UserName;
-
       var user = new UserEntity();
+
       await userStore.SetUserNameAsync(user, userName, CancellationToken.None);
       var result = await userManager.CreateAsync(user, registration.Password);
 
@@ -38,25 +37,14 @@ namespace CSharpEducation.GroupProject.ChatMSG.Web.Controllers
     }
 
     [HttpPost("login")]
-    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] LoginRequest login, [FromQuery] bool? useCookies, [FromQuery] bool? useSessionCookies)
+    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] UserLoginRequest login)
     {
-      var useCookieScheme = (useCookies == true) || (useSessionCookies == true);
-      var isPersistent = (useCookies == true) && (useSessionCookies != true);
+      var useCookieScheme = true;
+      var isPersistent = true;
+
       signInManager.AuthenticationScheme = useCookieScheme ? IdentityConstants.ApplicationScheme : IdentityConstants.BearerScheme;
 
-      var result = await signInManager.PasswordSignInAsync(login.Email, login.Password, isPersistent, lockoutOnFailure: true);
-
-      if (result.RequiresTwoFactor)
-      {
-        if (!string.IsNullOrEmpty(login.TwoFactorCode))
-        {
-          result = await signInManager.TwoFactorAuthenticatorSignInAsync(login.TwoFactorCode, isPersistent, rememberClient: isPersistent);
-        }
-        else if (!string.IsNullOrEmpty(login.TwoFactorRecoveryCode))
-        {
-          result = await signInManager.TwoFactorRecoveryCodeSignInAsync(login.TwoFactorRecoveryCode);
-        }
-      }
+      var result = await signInManager.PasswordSignInAsync(login.UserName, login.Password, isPersistent, lockoutOnFailure: true);
 
       if (!result.Succeeded)
       {
